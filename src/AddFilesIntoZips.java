@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -20,7 +19,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-@Mojo(name = "afiz", defaultPhase = LifecyclePhase.COMPILE)
+@Mojo(name = "add-files-into-archive", defaultPhase = LifecyclePhase.COMPILE)
 public class AddFilesIntoZips extends AbstractMojo {
 	private static final String TEMP_FILE_NAME = "temp.archive";
 	
@@ -31,14 +30,14 @@ public class AddFilesIntoZips extends AbstractMojo {
 	private File archive;
 	
 	@Parameter(required = true, property = "files")
-	private List<File> files;
+	private File[] files;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		Path temp = Paths.get(TEMP_FILE_NAME);
 		ZipEntry entry;
 		try (
 			BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(archive.toPath()));
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(temp));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(temp, StandardOpenOption.CREATE));
 			ZipInputStream zis = new ZipInputStream(bis);
 			ZipOutputStream zos = new ZipOutputStream(bos);
 		) {
