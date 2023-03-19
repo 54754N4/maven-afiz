@@ -11,9 +11,9 @@ Now that it's installed locally, you can add the dependency in your pom:
 <build>
     <plugins>
         <plugin>
-            <groupId>com.baeldung</groupId>
-            <artifactId>counter-maven-plugin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.satsana</groupId>
+            <artifactId>afiz-maven-plugin</artifactId>
+            <version>1.0.0</version>
             <executions>
                 <execution>
                     <goals>
